@@ -10,6 +10,7 @@ const sound = document.querySelector('.sound');
 
 icon.addEventListener('click', () => {
   sound.play();
+  console.log('start speaking');
   dictate();
 });
 
