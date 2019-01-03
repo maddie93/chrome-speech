@@ -17,7 +17,7 @@ synth.onvoiceschanged = function() {
     var voice = accessible_voices[i];
     console.log(voice);
     select_voice.options[i] = new Option(voice.name + " ("+voice.lang+")", i);
-    if (voice.name == "Zosia" && voice.lang == "pl-PL") {
+    if (voice.lang == "pl-PL") {
       select_voice.value = i;
     }
   }
@@ -47,7 +47,7 @@ synth.onvoiceschanged = function() {
    synth.speak(utterThis);
  }
  var assess = function(event) {
-  var no = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany/g)||[]).length;
+  var no = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g)||[]).length;
   var str = speech.textContent;
   var numberOfWords = str.split(/\s+/).length - 2;
   var percent = ((no/numberOfWords)*100).toFixed(1);
@@ -62,6 +62,9 @@ synth.onvoiceschanged = function() {
   console.log(text);
   var syntetize = new SpeechSynthesisUtterance(text+ ocena);
   syntetize.lang = select_language.value;
+  syntetize.pitch = pitch.value/10;
+  syntetize.rate = rate.value/10;
+  syntetize.voice = accessible_voices[select_voice.value];
   synth.speak(syntetize);
   console.log(text);
 
@@ -111,7 +114,7 @@ synth.onvoiceschanged = function() {
    final_span.innerHTML = linebreak(final_transcript);
    interim_span.innerHTML = linebreak(interim_transcript);
 
-   var count = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany/g) || []).length;
+   var count = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g) || []).length;
    var prev = parseInt(licznik.innerHTML);
    licznik.innerHTML = prev > count ? prev : count;
  };
