@@ -43,6 +43,7 @@
         <div id="speech" class="text_container">
           <span id="final_span" class="final"></span>
           <span id="interim_span" class="interim"></span>
+          i co teraz powiesz na to kurwo dziwko pizdo szmato
         </div>
         <select id="select_language">
           <option value="pl-PL"> Polski </option>
@@ -50,6 +51,12 @@
         </select>
 
         <p>LICZNIK NIEZBYT PIĘKNYCH SŁÓW: <span id="licznik">0</span></p>
+      </div>
+      <div class="one-half column">
+        <h4> Voice controls: </h4>
+        <p>Voice: <select name="voice" id="select_voice"></select></p>
+        <p>Pitch: <input type="range" name="pitch" id="pitch" min="0" max="20" value="10" onchange="setPitch()"> <span id="pitch_value">1</p>
+        <p>Rate: <input type="range" name="rate" id="rate" min="1" max="20" value="10" onchange="setRate()"> <span id="rate_value">1</p>
       </div>
     </div>
   </div>

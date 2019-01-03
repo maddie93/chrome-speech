@@ -3,20 +3,35 @@ var langs =
 [['English',         ['en-US']],
  ['Polski',          ['pl-PL']]]
 
+
  // for (var i = 0; i < langs.length; i++) {
  //   select_language.options[i] = new Option(langs[i][0], i);
  // }
  select_language.selectedIndex = 0;
 
- const synth = window.speechSynthesis;
+const synth = window.speechSynthesis;
+var accessible_voices = [];
+synth.onvoiceschanged = function() {
+  accessible_voices = synth.getVoices();
+  for (var i = 0; i < accessible_voices.length; i++) {
+    var voice = accessible_voices[i];
+    console.log(voice);
+    select_voice.options[i] = new Option(voice.name + " ("+voice.lang+")", i);
+    if (voice.name == "Zosia" && voice.lang == "pl-PL") {
+      select_voice.value = i;
+    }
+  }
+}
 
  if (!('webkitSpeechRecognition' in window)) {
    console.log("NIE DA RADY");
  } else {
    var recognition = new webkitSpeechRecognition();
+
+
+
    recognition.continuous = true;
    recognition.interimResults = true;
-
    recognition.onstart = function() {
      recognizing = true;
    };
@@ -25,6 +40,10 @@ var langs =
  var readIt = function (event) {
    var utterThis = new SpeechSynthesisUtterance(speech.textContent);
    utterThis.lang = select_language.value;
+   utterThis.pitch = pitch.value / 10;
+   utterThis.rate = rate.value / 10;
+   utterThis.voice = accessible_voices[select_voice.value];
+   console.log(utterThis);
    synth.speak(utterThis);
  }
  var assess = function(event) {
@@ -100,3 +119,11 @@ var langs =
  recognition.onend = function() {
    recognizing = false;
  };
+
+ var setPitch = function() {
+   pitch_value.innerHTML = pitch.value / 10;
+ }
+
+ var setRate = function() {
+   rate_value.innerHTML = rate.value / 10;
+ }
