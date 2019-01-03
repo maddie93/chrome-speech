@@ -21,7 +21,7 @@ var langs =
      recognizing = true;
    };
  }
- 
+
  var readIt = function (event) {
    var utterThis = new SpeechSynthesisUtterance(speech.textContent);
    utterThis.lang = select_language.value;

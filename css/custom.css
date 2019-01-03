@@ -7,3 +7,37 @@
   border: 1px solid #E1E1E1;
   border-radius: 4px;
 }
+.mood {
+  border: 1px solid #E1E1E1;
+  border-radius: 4px;
+  text-align: center;
+  height: 200px;
+}
+.mood:hover {
+  opacity: 0.6;
+}
+
+.terrible {
+  background-color: #FF565F;
+}
+
+.ok {
+  background-color: #FED017;
+}
+
+.good {
+  background-color: #9ED872;
+}
+
+.awesome {
+  /* background: -webkit-gradient(linear,  left top,  left bottom,
+          color-stop(0%, rgba(255, 0, 0, 1)),
+          color-stop(15%, rgba(255, 255, 0, 1)),
+          color-stop(30%, rgba(0, 255, 0, 1)),
+          color-stop(50%, rgba(0, 255, 255, 1)),
+          color-stop(65%, rgba(0, 0, 255, 1)),
+          color-stop(80%, rgba(255, 0, 255, 1)),
+          color-stop(100%, rgba(255, 0, 0, 1))); */
+  background-color: #009CD4;
+
+}
