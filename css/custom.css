@@ -40,3 +40,8 @@
   background-color: #009CD4;
 
 }
+
+span.count {
+    display: block;
+    font-size: xx-large;
+}
