@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<title>Web Speech API Demo</title>
-<h1> JELOŁ PLIS SAY SOMETHING THANKS </h1>
-<button id="start_speaking" onclick="startButton(event)"> OK MÓWIĘ </button>
-<div id="speech">
-  <span id="final_span" class="final"></span>
-  <span id="interim_span" class="interim"></span>
-</div>
-<select id="select_language">
-  <option value="en-US"> EN </option>
-  <option value="pl-PL"> PL </option>
-</select>
-
-<h2>LICZNIK KUREW: <span id="licznik">0</span></h2>
-
-<script>
 var recognizing = false;
 var langs =
 [['English',         ['en-US']],
@@ -94,6 +77,3 @@ var langs =
  recognition.onend = function() {
    recognizing = false;
  };
-
-
-</script>
