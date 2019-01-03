@@ -27,6 +27,26 @@ var langs =
    utterThis.lang = select_language.value;
    synth.speak(utterThis);
  }
+ var assess = function(event) {
+  var no = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany/g)||[]).length;
+  var str = speech.textContent;
+  var numberOfWords = str.split(/\s+/).length - 2;
+  var percent = ((no/numberOfWords)*100).toFixed(1);
+  console.log(numberOfWords);
+  var ocena = '';
+  if(percent>50){
+    ocena = 'twoja wypowiedź jest bardzo wulgarna, popracuj nad uprzejmoscią ';
+  }else{
+    ocena = 'wypowiadasz się całkiem przyzwoicie ';
+  }
+  var text = 'Powiedziałeś brzydkie słowo ' + no + ' na '+numberOfWords+' wypowiedzianych słów co, co stanowi ' + percent + ' procent wszystkich wypowiedzianych przez ciebie słów ';
+  console.log(text);
+  var syntetize = new SpeechSynthesisUtterance(text+ ocena);
+  syntetize.lang = select_language.value;
+  synth.speak(syntetize);
+  console.log(text);
+
+ }
 
  var startButton = function (event) {
    console.log("start!!!!");
@@ -72,7 +92,7 @@ var langs =
    final_span.innerHTML = linebreak(final_transcript);
    interim_span.innerHTML = linebreak(interim_transcript);
 
-   var count = (speech.innerHTML.match(/kurwa/g) || []).length;
+   var count = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany/g) || []).length;
    var prev = parseInt(licznik.innerHTML);
    licznik.innerHTML = prev > count ? prev : count;
  };
