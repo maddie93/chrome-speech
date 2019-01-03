@@ -23,6 +23,7 @@ var langs =
  // }
  select_language.selectedIndex = 0;
 
+ const synth = window.speechSynthesis;
 
  if (!('webkitSpeechRecognition' in window)) {
    console.log("NIE DA RADY");
@@ -41,6 +42,7 @@ var langs =
    console.log(recognizing);
    if (recognizing) {
      recognition.stop();
+     start_speaking.innerHTML = 'OK MÓWIĘ';
      return;
    }
    final_transcript = '';
@@ -51,6 +53,7 @@ var langs =
    ignore_onend = false;
    final_span.innerHTML = '';
    interim_span.innerHTML = '';
+   start_speaking.innerHTML = 'STOP';
  }
 
  var two_line = /\n\n/g;
@@ -69,6 +72,9 @@ var langs =
    for (var i = event.resultIndex; i < event.results.length; ++i) {
      if (event.results[i].isFinal) {
        final_transcript += event.results[i][0].transcript;
+       var utterThis = new SpeechSynthesisUtterance(final_transcript);
+       utterThis.lang = select_language.value;
+       synth.speak(utterThis);
      } else {
        interim_transcript += event.results[i][0].transcript;
      }
