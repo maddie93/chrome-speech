@@ -12,6 +12,8 @@
   <option value="pl-PL"> PL </option>
 </select>
 
+<h2>LICZNIK KUREW: <span id="licznik">0</span></h2>
+
 <script>
 var recognizing = false;
 var langs =
@@ -76,7 +78,8 @@ var langs =
        utterThis.lang = select_language.value;
        synth.speak(utterThis);
      } else {
-       interim_transcript += event.results[i][0].transcript;
+       var transcript_tmp = event.results[i][0].transcript;
+       interim_transcript += transcript_tmp;
      }
    }
    final_transcript = capitalize(final_transcript);
@@ -85,6 +88,9 @@ var langs =
    if (final_transcript || interim_transcript) {
      //showButtons('inline-block');
    }
+
+   var count = (interim_transcript.match(/kurwa/g) || []).length;
+   licznik.innerHTML = count;
  };
 
  recognition.onend = function() {
