@@ -21,8 +21,14 @@ var langs =
      recognizing = true;
    };
  }
+ 
+ var readIt = function (event) {
+   var utterThis = new SpeechSynthesisUtterance(speech.textContent);
+   utterThis.lang = select_language.value;
+   synth.speak(utterThis);
+ }
 
- function startButton(event) {
+ var startButton = function (event) {
    console.log("start!!!!");
    console.log(recognizing);
    if (recognizing) {
@@ -57,9 +63,6 @@ var langs =
    for (var i = event.resultIndex; i < event.results.length; ++i) {
      if (event.results[i].isFinal) {
        final_transcript += event.results[i][0].transcript;
-       var utterThis = new SpeechSynthesisUtterance(final_transcript);
-       utterThis.lang = select_language.value;
-       synth.speak(utterThis);
      } else {
        var transcript_tmp = event.results[i][0].transcript;
        interim_transcript += transcript_tmp;
