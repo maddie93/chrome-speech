@@ -24,6 +24,10 @@ synth.onvoiceschanged = function() {
    recognition.interimResults = true;
    recognition.lang = select_language.value;
    recognition.onstart = function() {
+    Array.from(document.getElementsByClassName('em')).forEach(element => {
+      element.style.display='none';
+    });
+    document.getElementById("heart-element").style.display='none';
      recognizing = true;
    };
 
@@ -144,7 +148,7 @@ synth.onvoiceschanged = function() {
       interim_transcript = '';
       recognition.stop();
       start_speaking.innerHTML = 'OK MÓWIĘ';
-      assess(event);
+      
     }
    var count = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g) || []).length;
    var prev = parseInt(licznik.innerHTML);
@@ -153,6 +157,7 @@ synth.onvoiceschanged = function() {
 
  recognition.onend = function() {
    recognizing = false;
+   assess(event);
    listener.start();
  };
 
