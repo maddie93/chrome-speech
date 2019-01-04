@@ -47,19 +47,30 @@ synth.onvoiceschanged = function() {
    synth.speak(utterThis);
  }
  var assess = function(event) {
-  var no = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g)||[]).length;
-  var str = speech.textContent;
+  var str = speech.textContent.toLowerCase();
+  console.log(str);
+  var no = (str.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g)||[]).length;
   var numberOfWords = str.split(/\s+/).length - 2;
   var percent = ((no/numberOfWords)*100).toFixed(1);
   console.log(numberOfWords);
   var ocena = '';
-  if(percent>50){
+  if(percent>75){
     ocena = 'twoja wypowiedź jest bardzo wulgarna, popracuj nad uprzejmoscią ';
-  }else{
+    document.getElementById('sad-face').style.display='block';
+  }else if(percent >25 && percent <=50){
     ocena = 'wypowiadasz się całkiem przyzwoicie ';
+    document.getElementById('no-expression').style.display='block';
+
+  }else if(percent>50 && percent<=75){
+    ocena = 'twoja wypowiedź może nie zostać zbyt dobrze odebrana';
+    document.getElementById('disappointed').style.display='block';
+
+  }else {
+    ocena = 'wypowiadasz się niezwykle kulturanlnie';
+    document.getElementById("heart-element").style.display='block';
   }
   var text = 'Powiedziałeś brzydkie słowo ' + no + ' na '+numberOfWords+' wypowiedzianych słów co, co stanowi ' + percent + ' procent wszystkich wypowiedzianych przez ciebie słów ';
-  console.log(text);
+  console.log(str);
   var syntetize = new SpeechSynthesisUtterance(text+ ocena);
   syntetize.lang = select_language.value;
   syntetize.pitch = pitch.value/10;
@@ -73,6 +84,11 @@ synth.onvoiceschanged = function() {
  var startButton = function (event) {
    console.log("start!!!!");
    console.log(recognizing);
+   Array.from(document.getElementsByClassName('em')).forEach(element => {
+     element.style.display='none';
+   });
+   document.getElementById("heart-element").style.display='none';
+
    if (recognizing) {
      recognition.stop();
      start_speaking.innerHTML = 'OK MÓWIĘ';

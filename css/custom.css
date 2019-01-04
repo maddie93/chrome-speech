@@ -45,3 +45,32 @@ span.count {
     display: block;
     font-size: xx-large;
 }
+.heart {
+  display: none;
+  background-color: red;
+  height: 30px;
+  transform: rotate(-45deg);
+  width: 30px;
+}
+.heart:before,
+.heart:after {
+  content: "";
+  background-color: red;
+  border-radius: 50%;
+  height: 30px;
+  position: absolute;
+  width: 30px;
+}
+.heart:before{
+  top: -15px;
+  left: 0;
+}
+.heart:after {
+  left: 15px;
+  top: 0;
+}
+.em {
+  display: none;
+  height:6em;
+  width:6em;
+}
