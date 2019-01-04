@@ -49,6 +49,7 @@ synth.onvoiceschanged = function() {
      final_transcript = '';
       final_span.innerHTML = '';
       interim_span.innerHTML = '';
+      licznik.innerHTML= '';
   }
     
  }
