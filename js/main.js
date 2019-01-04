@@ -1,14 +1,7 @@
 var recognizing = false;
 var final_transcript = '';
-var langs =
-[['English',         ['en-US']],
- ['Polski',          ['pl-PL']]]
 
-
- // for (var i = 0; i < langs.length; i++) {
- //   select_language.options[i] = new Option(langs[i][0], i);
- // }
- select_language.selectedIndex = 0;
+select_language.selectedIndex = 0;
 const synth = window.speechSynthesis;
 var accessible_voices = [];
 synth.onvoiceschanged = function() {
@@ -27,16 +20,27 @@ synth.onvoiceschanged = function() {
    console.log("NIE DA RADY");
  } else {
    var recognition = new webkitSpeechRecognition();
-
-
-
    recognition.continuous = true;
    recognition.interimResults = true;
+   recognition.lang = select_language.value;
    recognition.onstart = function() {
      recognizing = true;
    };
-   recognition.start();
 
+   var listener = new webkitSpeechRecognition();
+   listener.continuous = true;
+   listener.interimResults = true;
+   listener.lang = select_language.value;
+   listener.start();
+}
+ listener.onresult = function(event) {
+   var lastRes = event.results[event.results.length-1];
+   var lastTr = lastRes[lastRes.length-1];
+   var speechToText = lastTr == undefined ? '' : lastTr.transcript;
+   if (speechToText.includes('start')) {
+     listener.abort();
+     recognition.start();
+   }
  }
 
  var readIt = function (event) {
@@ -97,7 +101,7 @@ synth.onvoiceschanged = function() {
      return;
 
    }
-   
+
    recognition.lang = select_language.value;
    console.log(select_language);
    console.log(recognition);
@@ -121,19 +125,18 @@ synth.onvoiceschanged = function() {
  recognition.onresult = function(event) {
    var interim_transcript = '';
    console.log(event.results);
-   const speechToText = event.results[0][0].transcript;
-    if(speechToText.includes('start') && recognizing==true){
+    if(recognizing==true){
       for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
        final_transcript += event.results[i][0].transcript;
      } else {
-       var transcript_tmp = event.results[i][0].transcript;        
-       
+       var transcript_tmp = event.results[i][0].transcript;
+
        interim_transcript += transcript_tmp;
      }
 
    }
-   
+
    console.log(final_transcript);
    final_span.innerHTML = linebreak(final_transcript);
    interim_span.innerHTML = linebreak(interim_transcript);
@@ -150,6 +153,7 @@ synth.onvoiceschanged = function() {
 
  recognition.onend = function() {
    recognizing = false;
+   listener.start();
  };
 
  var setPitch = function() {
