@@ -50,6 +50,10 @@ synth.onvoiceschanged = function() {
       final_span.innerHTML = '';
       interim_span.innerHTML = '';
       licznik.innerHTML= '';
+      Array.from(document.getElementsByClassName('em')).forEach(element => {
+        element.style.display='none';
+      });
+      document.getElementById("heart-element").style.display='none';
   }
     
  }
@@ -65,7 +69,9 @@ synth.onvoiceschanged = function() {
  }
  var badwords = function(event){
    var words = speech.textContent.toLowerCase();
-   return words.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g||[]).length;
+   var bad = words.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g||[])
+   var length = bad? bad: 0;
+   return length;
 
  }
  var assess = function(event) {
