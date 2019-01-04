@@ -45,6 +45,12 @@ synth.onvoiceschanged = function() {
      listener.abort();
      recognition.start();
    }
+   if(speechToText.toLowerCase().includes('resetuj') ){
+     final_transcript = '';
+      final_span.innerHTML = '';
+      interim_span.innerHTML = '';
+  }
+    
  }
 
  var readIt = function (event) {
@@ -94,12 +100,7 @@ synth.onvoiceschanged = function() {
  var startButton = function (event) {
    console.log("start!!!!");
    console.log(recognizing);
-   Array.from(document.getElementsByClassName('em')).forEach(element => {
-     element.style.display='none';
-   });
-   document.getElementById("heart-element").style.display='none';
-
-   if (recognizing) {
+     if (recognizing) {
      recognition.stop();
      start_speaking.innerHTML = 'OK MÓWIĘ';
      return;
@@ -110,8 +111,6 @@ synth.onvoiceschanged = function() {
    console.log(select_language);
    console.log(recognition);
    ignore_onend = false;
-   //final_span.innerHTML = '';
-   //interim_span.innerHTML = '';
    start_speaking.innerHTML = 'STOP';
  }
 
