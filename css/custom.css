@@ -45,6 +45,11 @@ span.count {
     display: block;
     font-size: xx-large;
 }
+
+.small_text {
+  font-size: 6px;
+}
+
 .heart {
   display: none;
   background-color: red;
