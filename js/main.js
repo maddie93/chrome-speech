@@ -70,7 +70,7 @@ synth.onvoiceschanged = function() {
  var badwords = function(event){
    var words = speech.textContent.toLowerCase();
    var bad = words.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g||[])
-   var length = bad? bad: 0;
+   var length = bad? bad.length: 0;
    return length;
 
  }
