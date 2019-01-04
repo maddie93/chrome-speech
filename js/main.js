@@ -1,4 +1,5 @@
 var recognizing = false;
+var final_transcript = '';
 var langs =
 [['English',         ['en-US']],
  ['Polski',          ['pl-PL']]]
@@ -8,7 +9,6 @@ var langs =
  //   select_language.options[i] = new Option(langs[i][0], i);
  // }
  select_language.selectedIndex = 0;
-
 const synth = window.speechSynthesis;
 var accessible_voices = [];
 synth.onvoiceschanged = function() {
@@ -35,6 +35,8 @@ synth.onvoiceschanged = function() {
    recognition.onstart = function() {
      recognizing = true;
    };
+   recognition.start();
+
  }
 
  var readIt = function (event) {
@@ -93,15 +95,15 @@ synth.onvoiceschanged = function() {
      recognition.stop();
      start_speaking.innerHTML = 'OK MÓWIĘ';
      return;
+
    }
-   final_transcript = '';
+   
    recognition.lang = select_language.value;
    console.log(select_language);
    console.log(recognition);
-   recognition.start();
    ignore_onend = false;
-   final_span.innerHTML = '';
-   interim_span.innerHTML = '';
+   //final_span.innerHTML = '';
+   //interim_span.innerHTML = '';
    start_speaking.innerHTML = 'STOP';
  }
 
@@ -118,22 +120,33 @@ synth.onvoiceschanged = function() {
 
  recognition.onresult = function(event) {
    var interim_transcript = '';
-   for (var i = event.resultIndex; i < event.results.length; ++i) {
-     if (event.results[i].isFinal) {
+   console.log(event.results);
+   const speechToText = event.results[0][0].transcript;
+    if(speechToText.includes('start') && recognizing==true){
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
        final_transcript += event.results[i][0].transcript;
      } else {
-       var transcript_tmp = event.results[i][0].transcript;
+       var transcript_tmp = event.results[i][0].transcript;        
+       
        interim_transcript += transcript_tmp;
      }
+
    }
-   final_transcript = capitalize(final_transcript);
+   
+   console.log(final_transcript);
    final_span.innerHTML = linebreak(final_transcript);
    interim_span.innerHTML = linebreak(interim_transcript);
-
+   if(interim_transcript.toLowerCase().includes('stop')&& recognizing==true){
+      interim_transcript = '';
+      recognition.stop();
+      start_speaking.innerHTML = 'OK MÓWIĘ';
+      assess(event);
+    }
    var count = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g) || []).length;
    var prev = parseInt(licznik.innerHTML);
    licznik.innerHTML = prev > count ? prev : count;
- };
+ }};
 
  recognition.onend = function() {
    recognizing = false;
