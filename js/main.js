@@ -62,10 +62,15 @@ synth.onvoiceschanged = function() {
    console.log(utterThis);
    synth.speak(utterThis);
  }
+ var badwords = function(event){
+   var words = speech.textContent.toLowerCase();
+   return words.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g||[]).length;
+
+ }
  var assess = function(event) {
   var str = speech.textContent.toLowerCase();
   console.log(str);
-  var no = (str.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g)||[]).length;
+  var no = badwords();
   var numberOfWords = str.split(/\s+/).length - 2;
   var percent = ((no/numberOfWords)*100).toFixed(1);
   console.log(numberOfWords);
@@ -149,7 +154,7 @@ synth.onvoiceschanged = function() {
       start_speaking.innerHTML = 'OK MÓWIĘ';
       
     }
-   var count = (speech.innerHTML.match(/kurwa|pierdolę|pierdolony|huj|jebany|spierdalaj|jebie|cipa|dupa|zjebane/g) || []).length;
+   var count = badwords();
    var prev = parseInt(licznik.innerHTML);
    licznik.innerHTML = prev > count ? prev : count;
  }};
